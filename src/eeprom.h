@@ -1,8 +1,4 @@
-
-
-#ifndef EEPROM_H_
-#define EEPROM_H_
-
+#pragma once
 #include <string.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -25,4 +21,3 @@ uint8_t EEPROM_update_batch(uint16_t uiAddress, void *data,uint16_t len);
 uint8_t EEPROM_read_batch(uint16_t uiAddress, void *data,uint16_t len);
 
 
-#endif /* EEPROM_H_ */

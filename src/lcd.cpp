@@ -22,8 +22,6 @@ void lcd_send_4bit(uint8_t data, bool rs)
     _delay_ms(5);
 }
 
-
-
 void lcd_command(uint8_t data, bool rs)
 {
     pinWrite(RS, rs);
@@ -38,18 +36,9 @@ void lcd_command(uint8_t data, bool rs)
         //not implemented
     }
 }
-#define cols 16
-const uint8_t _row_offsets[] = {0x00, 0x40, 0x00 + cols,  0x40 + cols};
-
-void set_cursor(uint8_t row, uint8_t col)
-{
-    uint8_t address = col + _row_offsets[row];
-    lcd_command(address, false);
-}
 
 void lcd_set_cursor(uint8_t row, uint8_t col) {
-  static uint8_t offsets[] = { 0x00, 0x40, 0x14, 0x54 };
-
+    static uint8_t offsets[] = { 0x00, 40, 20, 60 };//Fucking try and error to find these values
   lcd_command(0x80 | (col + offsets[row]), false);
 }
 

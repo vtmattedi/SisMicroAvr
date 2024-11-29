@@ -1,21 +1,24 @@
 
 #include <serialutil.h>
-
+#include <pinutil.h>
+#include <util/atomic.h>
 /// @brief Initialize the serial port at 9600 baud
 void serialBegin()
 {
-    //Sets the baud rate
+    // Sets the baud rate
+    // It is a 16-bit register, so we need to set the high and low bytes
+    // and it will generate the baud rate for us using the internal clock
     UBRR0H = (MYUBRR >> 8);
     UBRR0L = MYUBRR;
-    
-    //Enable the receiver and transmitter
-    UCSR0B = (1 << RXEN0) | (1 << TXEN0);
+
+    // Enable the receiver and transmitter. Also enable the receive interrupt
+    UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);
     // Set frame format: 8data, 2stop bit
     // pretty common configuration
     UCSR0C = (1 << USBS0) | (3 << UCSZ00);
 }
 // Prints a string to the serial port
-void serialPrint (char str[])
+void serialPrint(char str[])
 {
     int len = strlen(str);
 
@@ -25,46 +28,66 @@ void serialPrint (char str[])
         while (!(UCSR0A & (1 << UDRE0)));
         // Put the data into the buffer
         UDR0 = str[i];
-    } 
+    }
 }
 
+//Recieves data from the serial port using interrupts
+volatile static uint8_t rx_buffer[RX_BUFFER_SIZE] = {0};
+volatile static uint16_t rx_count = 0;	
+volatile static uint8_t uart_tx_busy = 1;
+volatile static bool data_ready = false;
 
-char serialReadChar ()
-{
-    // Wait for data to be received
-    while (!(UCSR0A & (1 << RXC0)));
-    // Get and return received data from buffer
-    return UDR0;
+#define CR 13
+
+ISR(USART_RX_vect){
+	
+	volatile static uint16_t rx_write_pos = 0;
+	
+	rx_buffer[rx_write_pos] = UDR0;
+    // f*********** m************* SimulIDE does not f********
+    // terminate its f******** strings. ffs. added a check for CR
+    // cuz it does support sending CR.
+    if (rx_buffer[rx_write_pos] == '\0' || rx_buffer[rx_write_pos] == CR){
+        data_ready = true;
+    }
+	rx_count++;
+	rx_write_pos++;
+	if(rx_write_pos >= RX_BUFFER_SIZE){
+		rx_write_pos = 0;
+	}
+	
 }
 
-// this is very raw and should not be used
-// but we need to develop our own read strategies
-// for the project
-void serialRead(char* str, int len)
-{
-    int i = 0;
-    bool done = false;
-    if (serialAvailable())
-    {
-    while (!done)
-    {
-        str[i] = serialReadChar();
-        i++;
-        if (str[i] == 0 || i >= len - 2)
-        {
-            // if it's the last character, add a null terminator
-            if (i == len -1 )
-            {
-                str[len] = 0;
-            }
-            done = true;
+// Returns the number of characters in the rxbuffer unread
+uint16_t rx_data_count(void){
+    int _count = 0;
+    ATOMIC_BLOCK(ATOMIC_FORCEON){
+        _count =  rx_count;
+    }
+	return _count;
+}
+
+bool data_available(void){
+     ATOMIC_BLOCK(ATOMIC_FORCEON){
+        return data_ready && rx_count > 0;
+     }
+}
+
+// Reads a character from the rxbuffer
+char serial_read(void){
+	static uint16_t rx_read_pos = 0;
+	uint8_t data = 0;
+    ATOMIC_BLOCK(ATOMIC_FORCEON){
+        
+        data = rx_buffer[rx_read_pos];
+	    rx_read_pos++;
+	    rx_count--;
+	    if(rx_read_pos >= RX_BUFFER_SIZE){
+		    rx_read_pos = 0;
+	    }
+        if (rx_buffer[rx_read_pos] == '\0' || rx_buffer[rx_read_pos] == CR){
+            data_ready = false;
         }
     }
-    }
-}
-
-bool serialAvailable()
-{
-    // Check if the receive buffer has data
-    return UCSR0A & (1 << RXC0);
+	return data;
 }

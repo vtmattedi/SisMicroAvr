@@ -3,6 +3,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+#define RX_BUFFER_SIZE 256 // Buffer size for recieving serial communication
 
 #define BAUD 9600
 // Calculating the UBRR value for 9600 baud rate
@@ -18,7 +19,10 @@
 // It holds the data to be read or written
 #define MYUBRR ((F_CPU/16/BAUD)-1)
 
-void serialBegin();
+void serialBegin(void);
 void serialPrint (char str[]);
-void serialRead(char* str);
-bool serialAvailable();
+
+ISR(USART_RX_vect);
+char serial_read(void);
+bool data_available(void);
+uint16_t rx_data_count(void);

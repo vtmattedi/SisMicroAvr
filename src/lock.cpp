@@ -1,66 +1,96 @@
 #include <lock.h>
 // not gonna implement the inverted feature for now
-#define GET_VAL(val,inverted) (inverted ? !val : val)
-void lock::init(int relayPin, int ledPin)
+#define ADDR_MULTIPLIER 5
+Lock lockHandler;
+void Lock::init(int relayPin, int alarmPin)
 {
-    this.ledPin = ledPin;
-    this.relayPin = relayPin;
-    pinMode(ledPin, OUTPUT);
-    pinWrite(ledPin, LOW);
+    this->relayPin = relayPin;
+    this->alarmPin = alarmPin;
     pinMode(relayPin, OUTPUT);
+    pinMode(alarmPin, OUTPUT);
     pinWrite(relayPin, LOW);
-    this.state = IDLE;
-    this.currentGuess = "";
+    pinWrite(alarmPin, LOW);
+    this->locked = true;
+    this->alarmRaised = false;
+    this->guessCount = 0;
+    protoStringAssign(&password, "");
 }
-void lock::guessPwd()
+
+void Lock::tryUnlock()
 {
-    if (currentGuess == "1234")
+    for (int i = 0; i < numUsers; i++)
     {
-        state = UNLOCKED;
-        pinWrite(pin, GET_VAL(HIGH, this.inverted));
+        uint16_t addr = i * ADDR_MULTIPLIER;
+        uint8_t data[4];
+        EEPROM_read_batch(addr, data, 4);
+        if (data[0] == password.data[0] && data[1] == password.data[1] && data[2] == password.data[2] && data[3] == password.data[3])
+        {
+            this->locked = false;
+            this->alarmRaised = false;
+            this->guessCount = 0;
+            protoStringAssign(&password, "");
+            return;
+        }
+    }
+    // If we reach here, the password was not found
+    this->guessCount++;
+    if (this->guessCount >= 3)
+    {
+        this->alarmRaised = true;
+        pinWrite(this->alarmPin, HIGH);
+    }
+}
+
+void Lock::reset()
+{
+    protoStringAssign(&password, "");
+    this->locked = true;
+    this->guessCount = 0;
+    pinWrite(this->relayPin, LOW);
+}
+
+void Lock::HandleInput(int key)
+{
+    if (key == KEYPAD_STAR)
+    {
+        protoStringAssign(&this->password, ""); // clear password
     }
     else
     {
-        state = LOCKED;
-        pinWrite(pin, GET_VAL(LOW, this.inverted));
+        if (this->password.length < 4 && key < 10)
+        {
+            protoStringAppendChar(&this->password, keyMap[key]);
+        }
+        if (this->password.length == 4 && key == KEYPAD_HASH)
+        {
+            this->tryUnlock();
+        }
     }
 }
-//Returns to Idle, resets currents guess and lock the door
-void lock::reset()
+
+void Lock::RegisterUser()
 {
-    this.state = IDLE;
-    this.currentGuess = "";
-    pinWrite(this.relayPin, LOW);
-    pinWrite(this.ledPin, LOW);
+    uint16_t addr = this->numUsers * ADDR_MULTIPLIER;
+    EEPROM_write(addr, this->password.data[0]);
+    EEPROM_write(addr + 1, this->password.data[1]);
+    EEPROM_write(addr + 2, this->password.data[2]);
+    EEPROM_write(addr + 3, this->password.data[3]);
+    ;
+    numUsers++;
 }
-#define seconds_to_idle 10
-#define seconds_to_alarm 30
-void lock::handleKeyPress(int key)
+
+void LoadUsers()
 {
-    if (key = KEYPAD_NONE)
+    uint16_t addr = 0;
+    while (addr < EEPROM_SIZE)
     {
-        int limit = this.alarmed ? seconds_to_alarm : seconds_to_idle;
-        if (seconds() - lastInputTime > limit)
+        uint8_t data[4];
+        EEPROM_read_batch(addr, data, 4);
+        if (data[0] == 0xFF)
         {
-            reset();
+            break;
         }
-        return;
-    }
-
-    this.lastInputTime = seconds();
-    if (state == PASSWORD_INPUT)
-    {
-        if (key == KEYPAD_STAR)
-        {
-
-        }
-        else if (key == KEYPAD_HASH)
-        {
-            guessPwd();
-        }
-        else
-        {
-            currentGuess += key;
-        }
+        lockHandler.numUsers++;
+        addr += ADDR_MULTIPLIER;
     }
 }

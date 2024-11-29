@@ -3,11 +3,9 @@
 
 uint8_t EEPROM_read(uint16_t uiAddress, uint8_t *data)
 {
-	
 	if(uiAddress > EEPROM_SIZE){
 		return EEPROM_INVALID_ADDR;
 	}
-	
 	/* Wait for completion of previous write */
 	while(EECR & (1<<EEPE));
 	/* Set up address register */

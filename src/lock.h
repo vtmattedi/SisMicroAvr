@@ -1,28 +1,28 @@
+#pragma once
 #include <pinutil.h>
 #include <keyPad.h>
 #include <protostring.h>
 #include <timing.h>
-const char* stateMap[] = {"X","O"}
-typedef enum LockState
-{
-    PASSWORD_INPUT,
-    IDLE,
-    LOCKED,
-    UNLOCKED,
-    REGISTER_PWD,
-    ALARM
-};
-struct lock
-{
-    int relayPin;
-    int ledPin;
-    unsigned long lastInputTime;
-    LockState state;
-    bool state;
-    bool alarmed;
-    ProtoString currentGuess;
-    void handleKeyPress(int key);
-    void init(int relayPin, int ledPin);
-    void reset();
+#include <eeprom.h>
 
-}LockHandler;
+#define MAX_USERS 10
+struct Lock
+{
+    int numUsers;
+    int relayPin;
+    int alarmPin;
+    ProtoString password;
+    bool locked;
+    bool alarmRaised;
+    int guessCount;
+    void tryUnlock();
+    void reset();
+    void init(int relayPin, int alarmPin);
+    void HandleInput(int key);
+    void RegisterUser();
+    unsigned long lastInput; // millis() of the last input
+    unsigned long lastOpen; // millis() of the last time the lock was open
+    int currentUser;
+};
+
+extern Lock lockHandler;

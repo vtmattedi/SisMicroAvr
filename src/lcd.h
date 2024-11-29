@@ -17,5 +17,5 @@ void lcd_init_raw();
 void lcd_send_4bit(uint8_t data, bool rs);
 void print(char* str);  
 void clear_lcd();
-void set_cursor(uint8_t row, uint8_t col);
 void lcd_set_cursor(uint8_t row, uint8_t col);
+void lcd_command(uint8_t data, bool rs);

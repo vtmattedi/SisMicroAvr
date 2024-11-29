@@ -1,10 +1,9 @@
-
-#include "millis.h"
+#pragma once // same as #ifndef ... #define ... #endif construction
 
 #include <avr/io.h>
 #include <util/atomic.h>
 #include <avr/interrupt.h>
-
+#include <serialutil.h>
 
 /* ATOMIC_BLOCK
   Creates a block of code that is guaranteed to be executed
@@ -15,14 +14,15 @@
     Two possible macro parameters are permitted, ATOMIC_RESTORESTATE
     and ATOMIC_FORCEON.
 */
-volatile unsigned long timer1_millis;
+extern volatile unsigned long timer1_millis;
 //NOTE: A unsigned long holds values from 0 to 4,294,967,295 (2^32 - 1). It will roll over to 0 after reaching its maximum value.
-volatile unsigned long timer1_secs;
+extern volatile unsigned long timer1_secs;
 ISR(TIMER1_COMPA_vect);
-void init_millis(unsigned long f_cpu);
+void init_time(unsigned long f_cpu);
 unsigned long millis (void);
 unsigned long seconds (void);
 void set_seconds (unsigned long secs);
+
 struct DateTime
 {
   uint16_t year;
@@ -33,7 +33,5 @@ struct DateTime
   uint8_t second;
   uint8_t day_of_week;
   void Calculate();
-  char* Date();
-  char* Time();
-  char* DateAndTime();
 };
+
