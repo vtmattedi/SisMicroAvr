@@ -78,7 +78,6 @@ char serial_read(void){
 	static uint16_t rx_read_pos = 0;
 	uint8_t data = 0;
     ATOMIC_BLOCK(ATOMIC_FORCEON){
-        
         data = rx_buffer[rx_read_pos];
 	    rx_read_pos++;
 	    rx_count--;

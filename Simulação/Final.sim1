@@ -1,0 +1,89 @@
+<circuit version="1.1.0-SR0" rev="1917" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="Uno-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-196,-180" rotation="0" hflip="1" vflip="1" label="Uno-3" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="../../../Documents/PlatformIO/Projects/SisMicro/.pio/build/uno/firmware.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="KeyPad" CircId="KeyPad-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-304,-80" rotation="0" hflip="1" vflip="1" label="KeyPad-4" idLabPos="-8,-16" labelrot="0" valLabPos="-16,20" valLabRot="0" Rows="4" Cols="3" Key_Labels="123456789&#x3C0#" />
+
+<item itemtype="Hd44780" CircId="Hd44780-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-328,-192" rotation="0" hflip="1" vflip="1" label="Hd44780-5" idLabPos="85.7279,-124.78" labelrot="0" valLabPos="-16,20" valLabRot="0" Rows="4" Cols="16" />
+
+<item itemtype="RelaySPST" CircId="RelaySPST-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-408,-108" rotation="0" hflip="1" vflip="1" label="RelaySPST-6" idLabPos="-16,8" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="20 mA" IOff="10 mA" Inductance="100 mH" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="Ground" CircId="Ground-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-56" rotation="0" hflip="1" vflip="1" label="Ground-7" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-504,-132" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-11" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="Led" CircId="Led-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-364,-124" rotation="0" hflip="1" vflip="1" label="Led-13" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="30 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-14" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-344,-72" rotation="90" hflip="1" vflip="1" label="Resistor-14" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Ground" CircId="Ground-15" mainComp="false" Show_id="false" Show_Val="false" Pos="-344,-20" rotation="0" hflip="1" vflip="1" label="Ground-15" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Led" CircId="Led-16" mainComp="false" Show_id="false" Show_Val="false" Pos="-384,-76" rotation="90" hflip="1" vflip="1" label="Led-16" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="30 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-17" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-384,-36" rotation="90" hflip="1" vflip="1" label="Resistor-17" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Probe" CircId="Probe-19" mainComp="false" Show_id="false" Show_Val="true" Pos="-280,-164" rotation="-45" hflip="1" vflip="1" label="Probe-19" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-21" mainComp="false" Show_id="false" Show_Val="true" Pos="-256,44" rotation="-45" hflip="1" vflip="1" label="Probe-21" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="SerialTerm" CircId="SerialTerm-27" mainComp="false" Show_id="false" Show_Val="false" Pos="-64,-244" rotation="90" hflip="-1" vflip="-1" label="SerialTerm-27" idLabPos="-20,-32" labelrot="0" valLabPos="-16,20" valLabRot="0" Baudrate="9600 _Bd" DataBits="8 _bits" StopBits="1 _bits" SerialMon="true" />
+
+<item itemtype="Probe" CircId="Probe-28" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,-108" rotation="-45" hflip="1" vflip="1" label="Probe-28" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-29" mainComp="false" Show_id="false" Show_Val="true" Pos="-300,-124" rotation="-45" hflip="1" vflip="1" label="Probe-29" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Node" CircId="Node-18" mainComp="false" Pos="-344,-48" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="KeyPad-4-Pin4" endpinid="Uno-3-A0" pointList="-304,-8,-304,108,-4,108,-4,-124,-44,-124" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="KeyPad-4-Pin6" endpinid="Uno-3-A2" pointList="-272,-8,-272,88,12,88,12,-140,-44,-140" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Hd44780-5-PinRS" endpinid="Uno-3-3" pointList="-312,-184,-312,-140,-188,-140" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Uno-3-2" endpinid="Hd44780-5-PinEn" pointList="-188,-148,-296,-148,-296,-184" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Hd44780-5-dataPin7" endpinid="Uno-3-7" pointList="-232,-184,-232,-108,-188,-108" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Uno-3-5" endpinid="Hd44780-5-dataPin5" pointList="-188,-124,-248,-124,-248,-184" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Uno-3-4" endpinid="Hd44780-5-dataPin4" pointList="-188,-132,-256,-132,-256,-184" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Uno-3-9" endpinid="RelaySPST-6-inductor-rPin" pointList="-188,-84,-228,-84,-228,-100,-248,-100,-248,-108,-392,-108" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Ground-7-Gnd" endpinid="RelaySPST-6-inductor-lPin" pointList="-436,-72,-436,-108,-424,-108" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Fixed Voltage-11-outnod" endpinid="RelaySPST-6-pinP2" pointList="-488,-132,-424,-132,-424,-124" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Led-13-rPin" endpinid="Resistor-14-lPin" pointList="-348,-124,-348,-88,-344,-88" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Led-13-lPin" endpinid="RelaySPST-6-switch0pinN" pointList="-380,-124,-392,-124" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Resistor-17-lPin" endpinid="Led-16-rPin" pointList="-384,-52,-384,-60" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="Resistor-17-rPin" endpinid="Node-18-1" pointList="-384,-20,-384,-8,-364,-8,-364,-48,-344,-48" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="Resistor-14-rPin" endpinid="Node-18-0" pointList="-344,-56,-344,-48" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-18-2" endpinid="Ground-15-Gnd" pointList="-344,-48,-344,-36" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="Led-16-lPin" endpinid="Uno-3-8" pointList="-384,-92,-188,-92" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Uno-3-10" endpinid="KeyPad-4-Pin0" pointList="-188,-76,-256,-76,-256,-72" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="KeyPad-4-Pin1" endpinid="Uno-3-11" pointList="-256,-56,-188,-56,-188,-68" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="KeyPad-4-Pin2" endpinid="Uno-3-12" pointList="-256,-40,-204,-40,-204,-60,-188,-60" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="KeyPad-4-Pin3" endpinid="Uno-3-13" pointList="-256,-24,-196,-24,-196,-52,-188,-52" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="SerialTerm-27-pin0" endpinid="Uno-3-0" pointList="-72,-220,-72,-164,-188,-164" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="SerialTerm-27-pin1" endpinid="Uno-3-1" pointList="-56,-220,-56,-156,-188,-156" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="Hd44780-5-dataPin6" endpinid="Uno-3-6" pointList="-240,-184,-240,-116,-188,-116" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="KeyPad-4-Pin5" endpinid="Uno-3-A1" pointList="-288,-8,-288,96,4,96,4,-132,-44,-132" />
+
+</circuit>
