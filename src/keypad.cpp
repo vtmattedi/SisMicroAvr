@@ -17,6 +17,7 @@ int readKeypad()
         {
             res = 1 + i * 3 + 2;
         }
+        pinWrite(2 + i ,LOW);
     }
 
     // res = 1 + row * 3 + col 
@@ -50,3 +51,11 @@ void setupKeyPad()
     pinMode(COL2,INPUT);
     pinMode(COL3,INPUT);
 }
+
+char keyMap[] = {
+    '0',
+    '1','2','3',
+    '4','5','6',
+    '7','8','9',
+    '*','#'
+};

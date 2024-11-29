@@ -22,3 +22,5 @@
 
 int readKeypad();
 void setupKeyPad();
+
+extern char keyMap[];
