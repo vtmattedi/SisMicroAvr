@@ -2,13 +2,13 @@
 
 //pin maps for the keypad (arduino pins)
 //They are properly mapped to the pins on the ATmega328P on the pinutil.cpp file
-#define ROW1 2
-#define ROW2 3
-#define ROW3 4
-#define ROW4 5
-#define COL1 6
-#define COL2 7
-#define COL3 8
+#define ROW1 10
+#define ROW2 11
+#define ROW3 12
+#define ROW4 13
+#define COL1 14
+#define COL2 15
+#define COL3 16
 
 //Keypad layout
 // 1 2 3

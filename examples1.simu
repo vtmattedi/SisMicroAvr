@@ -1,0 +1,36 @@
+<circuit noLinAcc="5" reactStep="50" noLinStep="10" type="simulide_0.1" animate="0" speed="1000000">
+ 
+KeyPad-2: 
+<item valLabely="0" valLabRot="0" Key_Labels="123456789*0#" labelx="-16" Cols="3" hflip="1" itemtype="KeyPad" y="-468" objectName="KeyPad-2" Show_id="false" valLabelx="0" labelrot="0" x="-460" rotation="0" Rows="4" labely="-24" vflip="1" id="KeyPad-2"/>
+ 
+Arduino Uno-1: 
+<item valLabely="0" Mhz="16" valLabRot="0" labelx="0" Ser_Port="false" hflip="1" itemtype="Arduino" y="-492" objectName="Arduino Uno-1" Show_id="true" valLabelx="0" labelrot="0" Ser_Monitor="true" x="-244" rotation="0" labely="-20" vflip="1" Program="../../../Documents/PlatformIO/Projects/SisMicro/.pio/build/uno/firmware.hex" id="Arduino Uno-1"/>
+ 
+Connector-3: 
+<item valLabely="0" valLabRot="0" labelx="-16" startpinid="KeyPad-2-Pin0" endpinid="Arduino Uno-1-PD2" pointList="-412,-460,-236,-460" hflip="1" itemtype="Connector" y="-460" objectName="Connector-3" Show_id="false" valLabelx="0" labelrot="0" enodeid="enode-3" x="-412" rotation="0" labely="-24" vflip="1" id="Connector-3"/>
+ 
+Connector-4: 
+<item valLabely="0" valLabRot="0" labelx="-16" startpinid="KeyPad-2-Pin1" endpinid="Arduino Uno-1-PD3" pointList="-412,-444,-404,-444,-404,-452,-236,-452" hflip="1" itemtype="Connector" y="-444" objectName="Connector-4" Show_id="false" valLabelx="0" labelrot="0" enodeid="enode-4" x="-412" rotation="0" labely="-24" vflip="1" id="Connector-4"/>
+ 
+Connector-5: 
+<item valLabely="0" valLabRot="0" labelx="-16" startpinid="KeyPad-2-Pin2" endpinid="Arduino Uno-1-PD4" pointList="-412,-428,-396,-428,-396,-444,-236,-444" hflip="1" itemtype="Connector" y="-428" objectName="Connector-5" Show_id="false" valLabelx="0" labelrot="0" enodeid="enode-5" x="-412" rotation="0" labely="-24" vflip="1" id="Connector-5"/>
+ 
+Connector-6: 
+<item valLabely="0" valLabRot="0" labelx="-16" startpinid="KeyPad-2-Pin3" endpinid="Arduino Uno-1-PD5" pointList="-412,-412,-388,-412,-388,-436,-236,-436" hflip="1" itemtype="Connector" y="-412" objectName="Connector-6" Show_id="false" valLabelx="0" labelrot="0" enodeid="enode-6" x="-412" rotation="0" labely="-24" vflip="1" id="Connector-6"/>
+ 
+Connector-7: 
+<item valLabely="0" valLabRot="0" labelx="-16" startpinid="KeyPad-2-Pin4" endpinid="Arduino Uno-1-PD6" pointList="-460,-396,-460,-380,-372,-380,-372,-428,-236,-428" hflip="1" itemtype="Connector" y="-396" objectName="Connector-7" Show_id="false" valLabelx="0" labelrot="0" enodeid="enode-7" x="-460" rotation="0" labely="-24" vflip="1" id="Connector-7"/>
+ 
+Connector-8: 
+<item valLabely="0" valLabRot="0" labelx="-16" startpinid="KeyPad-2-Pin5" endpinid="Arduino Uno-1-PD7" pointList="-444,-396,-444,-372,-356,-372,-356,-420,-236,-420" hflip="1" itemtype="Connector" y="-396" objectName="Connector-8" Show_id="false" valLabelx="0" labelrot="0" enodeid="enode-8" x="-444" rotation="0" labely="-24" vflip="1" id="Connector-8"/>
+ 
+Connector-9: 
+<item valLabely="0" valLabRot="0" labelx="-16" startpinid="KeyPad-2-Pin6" endpinid="Arduino Uno-1-PB0" pointList="-428,-396,-348,-396,-348,-404,-236,-404" hflip="1" itemtype="Connector" y="-396" objectName="Connector-9" Show_id="false" valLabelx="0" labelrot="0" enodeid="enode-9" x="-428" rotation="0" labely="-24" vflip="1" id="Connector-9"/>
+ 
+PlotterWidget: 
+<item normalGeometry="" windowTitle="" updatesEnabled="true" focusPolicy="0" y="0" minimumHeight="200" locale="" acceptDrops="false" width="200" isActiveWindow="true" whatsThis="" minimumWidth="200" layoutDirection="0" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" windowOpacity="1" minimumSize="" cursor="" fullScreen="false" toolTip="" visible="false" accessibleName="" maximumHeight="200" modal="false" windowModified="false" geometry="" focus="false" sizeIncrement="" height="200" windowIconText="" palette="" frameSize="" minimized="false" mouseTracking="false" childrenRect="" enabled="true" objectName="PlotterWidget" childrenRegion="" styleSheet="" maximumSize="" x="0" MaxVolt="500" sizeHint="" contextMenuPolicy="1" itemtype="Plotter" pos="" windowModality="0" windowIcon="" maximumWidth="1000" maximized="false" autoFillBackground="false" minimumSizeHint="" size="" sizePolicy="" toolTipDuration="-1" windowFilePath="" statusTip="" frameGeometry="" inputMethodHints="0" baseSize="" rect="" MinVolt="-500" accessibleDescription=""/>
+ 
+SerialPortWidget: 
+<item normalGeometry="" windowTitle="Settings" updatesEnabled="true" focusPolicy="0" y="0" minimumHeight="0" locale="" acceptDrops="false" width="313" isActiveWindow="true" whatsThis="" minimumWidth="0" layoutDirection="0" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" windowOpacity="1" minimumSize="" cursor="" fullScreen="false" toolTip="" visible="false" accessibleName="" maximumHeight="170" modal="false" windowModified="false" geometry="" focus="false" sizeIncrement="" height="141" windowIconText="" palette="" frameSize="" minimized="false" mouseTracking="false" childrenRect="" enabled="true" objectName="SerialPortWidget" childrenRegion="" styleSheet="" maximumSize="" x="0" sizeHint="" SettingsProp="COM1,0,3,0,0,0" contextMenuPolicy="1" itemtype="SerialPort" pos="" windowModality="0" windowIcon="" maximumWidth="450" maximized="false" autoFillBackground="false" minimumSizeHint="" size="" sizePolicy="" toolTipDuration="-1" windowFilePath="" statusTip="" frameGeometry="" inputMethodHints="0" baseSize="" rect="" accessibleDescription=""/>
+ 
+</circuit>

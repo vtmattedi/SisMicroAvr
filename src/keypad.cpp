@@ -1,23 +1,49 @@
 #include "keypad.h"
+
+int getRowPin(int row)
+{
+    switch (row)
+    {
+    case 0:
+        return ROW1;
+    case 1:
+        return ROW2;
+    case 2:
+        return ROW3;
+    case 3:
+        return ROW4;
+    default:
+        return -1;
+    }
+}
+int getColPin(int col)
+{
+    switch (col)
+    {
+    case 0:
+        return COL1;
+    case 1:
+        return COL2;
+    case 2:
+        return COL3;
+    default:
+        return -1;
+    }
+}
 int readKeypad()
 {
     int res = KEYPAD_NONE;
     for (int i = 0; i < 4; i++)
     {
-        pinWrite(2 + i ,HIGH);
-        if (pinRead(COL1))
+        pinWrite(getRowPin(i) ,HIGH);
+        for (int j = 0; j < 3; j++)
         {
-            res = 1 +  i * 3;
+            if (pinRead(getColPin(j)))
+            {
+                res = 1 + i * 3 + j;
+            }
         }
-        if (pinRead(COL2))
-        {
-            res = 1 + i * 3 + 1;
-        }
-        if (pinRead(COL3))
-        {
-            res = 1 + i * 3 + 2;
-        }
-        pinWrite(2 + i ,LOW);
+        pinWrite(getRowPin(i) ,LOW);
     }
 
     // res = 1 + row * 3 + col 

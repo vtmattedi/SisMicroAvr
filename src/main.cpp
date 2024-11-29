@@ -1,12 +1,93 @@
+#define __DELAY_BACKWARD_COMPATIBLE__
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
-
+#include <stdio.h>
 // Our files just for organization
 #include <eeprom.h>
 #include <serialutil.h>
 #include <pinutil.h>
 #include <keyPad.h>
+
+#include <lcd.h>
+
+
+
+struct ProtoString
+{
+    #define MAX_LENGTH 100
+    char data[MAX_LENGTH];
+    int length;
+
+    ProtoString()
+    {
+    }
+
+    char* c_str()
+    {
+        return data;
+    }
+
+    ProtoString operator+=(char c)
+    {
+        data[length] = c;
+        length++;
+        return *this;
+    }
+
+    ProtoString operator=(char* c)
+    {
+        length = 0;
+        for (size_t i = 0; i < MAX_LENGTH; i++)
+        {
+           data[i] = 0;
+        }
+        
+        while (*c != 0)
+        {
+            data[length] = *c;
+            length++;
+            c++;
+        }
+        return *this;
+    }
+
+};
+
+ProtoString passwd = ProtoString(); 
+
+
+
+
+
+int value[] = {0b0010, 0, 1, 0, 0b10, 0, 0b1100, 0b0100, 0b1000, 0b0100, 0b1001 };
+char* val_name[] = {
+    "MODE",
+    "CLEAR_H",
+    "CLEAR_L",
+    "RETURN_H",
+    "RETURN_L",
+    "INIT_H",
+    "INIT_L",
+    "H_H",
+    "H_L",
+    "I_H",
+    "I_L"
+};
+
+bool rs[] = {false, false, false, false, false, false, false, true, true, true, true};
+
+void cnp()
+{
+    clear_lcd();
+    lcd_set_cursor(0, 0);
+    print(passwd.data);
+    lcd_set_cursor(0, 15);
+    print("*");
+
+    
+
+}
 
 int main(void)
 {
@@ -14,29 +95,40 @@ int main(void)
     setupKeyPad();
     // Setup the serial port
     serialBegin();
-    while (1)
+    lcd_init();
+    static int count = 0;
+    static int lastKey = KEYPAD_NONE;
+    while (true)
     {
-        // Read the keypad
         int key = readKeypad();
-        static int last_key = KEYPAD_NONE;
-        // If a key was pressed
-        if (key != KEYPAD_NONE)
+        if (key != lastKey)
         {
-            if (key == KEYPAD_STAR && last_key == KEYPAD_STAR)
+            lastKey = key;
+            if (key != KEYPAD_NONE)
             {
-                serialPrint("Double Star\n");
-            }
-            else
-            {
-                // Print the key to the serial port
-                UDR0 = keyMap[key];
-                while (!(UCSR0A & (1 << UDRE0)));
-            }
+                if (key == KEYPAD_STAR)
+                {
+                    // Clear the password
+                    passwd = "";
+                    cnp();
+                }
+                else
+                {
+                passwd += keyMap[key];
+                cnp();
+                }
+                serialPrint("Passwd: \"");
+                serialPrint(passwd.data);
+                serialPrint("\"\n");
+                char buffer [50];
+                sprintf(buffer, "Key: %c\n", keyMap[key]);
+                serialPrint(buffer);
 
-            _delay_ms(100); // Debounce
-            last_key = key;
+            }
         }
+
     }
 
     return 1;
 }
+
