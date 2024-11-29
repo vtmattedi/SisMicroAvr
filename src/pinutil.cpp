@@ -1,28 +1,52 @@
 #include <pinutil.h>
 
+
 //Pin 0-7 are on PORTD
 //Pin 8-13 are on PORTB (0- 5)
-//PC0-5 are the Analog pins
-void pinMode(int pin, bool mode)
+//PORTC 0-5 are the Analog pins (pins 14-19)
+
+//Gets the port of an Arduino Pin
+uint8_t getPort(int pin)
 {
-    int port = -1;
     if (pin >= 0 && pin <= 7)
     {
-        port = _portd;
+        return _portd;
     }
     else if (pin >= 8 && pin <= 13)
     {
-        port = _portb;
-        pin -= 8;
+        return _portb;
     }
     else if (pin >= 14 && pin <= 19)
     {
-        port = _portc;
-        pin -= 14;
+        return _portc;
     }
+    return INVALID_PIN;
+}
 
+//Gets the pin number on the port of an Arduino Pin
+uint8_t getPin(int pin)
+{
+    if (pin >= 0 && pin <= 7)
+    {
+        return pin;
+    }
+    else if (pin >= 8 && pin <= 13)
+    {
+        return pin - 8;
+    }
+    else if (pin >= 14 && pin <= 19)
+    {
+        return pin - 14;
+    }
+    return INVALID_PIN;
+}
 
-    if (port == -1)
+//Sets the DDRx register for a pin for input or output
+void pinMode(int pin, bool mode)
+{
+    int port = getPort(pin);
+    pin = getPin(pin);
+    if (port == INVALID_PIN)
     {
         //Invalid pin
         return;
@@ -61,25 +85,12 @@ void pinMode(int pin, bool mode)
      
 }
 
+//Writes a value to a pin on PORTx based on Arduino pin number
 void pinWrite(int pin, bool value)
 {
-    int port = -1;
-    if (pin >= 0 && pin <= 7)
-    {
-        port = _portd;
-    }
-    else if (pin >= 8 && pin <= 13)
-    {
-        port = _portb;
-        pin -= 8;
-    }
-    else if (pin >= 14 && pin <= 19)
-    {
-        port = _portc;
-        pin -= 14;
-    }
-
-    if (port == -1)
+    int port = getPort(pin);
+     pin = getPin(pin);
+    if (port == INVALID_PIN)
     {
         //Invalid pin
         return;
@@ -117,25 +128,13 @@ void pinWrite(int pin, bool value)
     }
 }
 
+//Reads a value from a pin on PORTx based on Arduino pin number
 bool pinRead(int pin)
 {
-     int port = -1;
-    if (pin >= 0 && pin <= 7)
-    {
-        port = _portd;
-    }
-    else if (pin >= 8 && pin <= 13)
-    {
-        port = _portb;
-        pin -= 8;
-    }
-    else if (pin >= 14 && pin <= 19)
-    {
-        port = _portc;
-        pin -= 14;
-    }
+     int port = getPort(pin);
+     pin = getPin(pin);
 
-    if (port == -1)
+    if (port == INVALID_PIN)
     {
         //Invalid pin
         return false;

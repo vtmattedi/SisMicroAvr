@@ -21,3 +21,19 @@ volatile unsigned long timer1_secs;
 ISR(TIMER1_COMPA_vect);
 void init_millis(unsigned long f_cpu);
 unsigned long millis (void);
+unsigned long seconds (void);
+void set_seconds (unsigned long secs);
+struct DateTime
+{
+  uint16_t year;
+  uint8_t month;
+  uint8_t day;
+  uint8_t hour;
+  uint8_t minute;
+  uint8_t second;
+  uint8_t day_of_week;
+  void Calculate();
+  char* Date();
+  char* Time();
+  char* DateAndTime();
+};

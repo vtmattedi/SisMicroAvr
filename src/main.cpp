@@ -11,71 +11,12 @@
 
 #include <lcd.h>
 
-
-
-struct ProtoString
-{
-    #define MAX_LENGTH 100
-    char data[MAX_LENGTH];
-    int length;
-
-    ProtoString()
-    {
-    }
-
-    char* c_str()
-    {
-        return data;
-    }
-
-    ProtoString operator+=(char c)
-    {
-        data[length] = c;
-        length++;
-        return *this;
-    }
-
-    ProtoString operator=(char* c)
-    {
-        length = 0;
-        for (size_t i = 0; i < MAX_LENGTH; i++)
-        {
-           data[i] = 0;
-        }
-        
-        while (*c != 0)
-        {
-            data[length] = *c;
-            length++;
-            c++;
-        }
-        return *this;
-    }
-
-};
+#include <timing.h>
+//Should be in a separate file and now it is :)
+#include <protostring.h>
 
 ProtoString passwd = ProtoString(); 
 
-
-
-
-
-int value[] = {0b0010, 0, 1, 0, 0b10, 0, 0b1100, 0b0100, 0b1000, 0b0100, 0b1001 };
-char* val_name[] = {
-    "MODE",
-    "CLEAR_H",
-    "CLEAR_L",
-    "RETURN_H",
-    "RETURN_L",
-    "INIT_H",
-    "INIT_L",
-    "H_H",
-    "H_L",
-    "I_H",
-    "I_L"
-};
-
-bool rs[] = {false, false, false, false, false, false, false, true, true, true, true};
 
 void cnp()
 {
@@ -96,8 +37,11 @@ int main(void)
     // Setup the serial port
     serialBegin();
     lcd_init();
+    millis_init();
     static int count = 0;
     static int lastKey = KEYPAD_NONE;
+    set_seconds(1732886116);
+    DateTime dt;
     while (true)
     {
         int key = readKeypad();
@@ -117,6 +61,10 @@ int main(void)
                 passwd += keyMap[key];
                 cnp();
                 }
+                dt.Calculate();
+                char dateBuffer[50];
+                sprintf(dateBuffer, "Time: %d/%d/%d %d:%d:%d", dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second);
+                serialPrint(dateBuffer);
                 serialPrint("Passwd: \"");
                 serialPrint(passwd.data);
                 serialPrint("\"\n");
