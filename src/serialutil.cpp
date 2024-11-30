@@ -31,6 +31,20 @@ void serialPrint(char str[])
     }
 }
 
+
+// Prints a formatted string to the serial port
+// using vsprintf
+void serialPrintf(const char *str, ...)
+{
+    va_list args;
+    va_start(args, str);
+    char buffer[256];
+    vsprintf(buffer, str, args);
+    serialPrint(buffer);
+    va_end(args);
+}
+
+
 //Recieves data from the serial port using interrupts
 volatile static uint8_t rx_buffer[RX_BUFFER_SIZE] = {0};
 volatile static uint16_t rx_count = 0;	
@@ -89,4 +103,11 @@ char serial_read(void){
         }
     }
 	return data;
+}
+
+void serialPrintTime()
+{
+    DateTime dt;
+    dt.Calculate();
+    serialPrintf("[%02d:%02d:%02d] - ", dt.hour, dt.minute, dt.second);
 }

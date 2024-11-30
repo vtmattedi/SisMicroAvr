@@ -2,13 +2,12 @@
 #include <avr/io.h>
 // Zero out the string and set the length to 0
 void initProtoString(struct ProtoString* pstr)
-{    
+{ 
     pstr->length = 0;
     for (int i = 0; i < MAX_LENGTH; i++)
     {
         pstr->data[i] = '\0';
     }
-
 }
 const char* protoStringCStr(const struct ProtoString* pstr)
 {

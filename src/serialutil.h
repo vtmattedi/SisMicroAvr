@@ -1,8 +1,14 @@
 #include <avr/io.h>
-#include "eeprom.h"
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+//for printf, strlen
+#include <stdarg.h>
+#include <stdio.h> 
+#include <string.h>
+
+//for serialPrintTime()
+#include <timing.h>
 #define RX_BUFFER_SIZE 256 // Buffer size for recieving serial communication
 
 #define BAUD 9600
@@ -21,6 +27,8 @@
 
 void serialBegin(void);
 void serialPrint (char str[]);
+void serialPrintf(const char *str, ...);
+void serialPrintTime(void);
 
 ISR(USART_RX_vect);
 char serial_read(void);

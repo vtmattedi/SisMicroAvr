@@ -75,7 +75,7 @@ void lcd_init_raw()
     
 }
 
-void print(char* str)
+void lcd_print(char* str)
 {
     while (*str)
     {
@@ -104,6 +104,6 @@ void lcd_init()
     clear_lcd();
     return_home();
     lcd_command(0x0C, false); // Display on, cursor off
-    print("Hello World");
+    lcd_print("Hello World");
     _delay_ms(3);
 }
