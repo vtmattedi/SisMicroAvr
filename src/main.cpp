@@ -1,4 +1,4 @@
-#define __DELAY_BACKWARD_COMPATIBLE__
+#define __DELAY_BACKWARD_COMPATIBLE__ // for _delay_ms, not sure if needed
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
