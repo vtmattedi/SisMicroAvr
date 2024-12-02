@@ -14,4 +14,3 @@ void initProtoString(struct ProtoString* pstr);
 const char* protoStringCStr(const struct ProtoString* pstr);
 void protoStringAppendChar(struct ProtoString* pstr, char c);
 void protoStringAssign(struct ProtoString* pstr, const char* c);
-

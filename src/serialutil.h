@@ -18,7 +18,8 @@
 //UCR0A is the USART Control and Status Register A
 // It has the RXC0 and TXC0 flags that indicate if there is data to be read or written
 //UCR0B is the USART Control and Status Register B
-// It has the RXEN0 and TXEN0 flags that enable the receiver and transmitter
+// It has the RXEN0 and TXEN0 flags that enable the receiver and transmitter. 
+// Flags to enable/disable interruptions are also bits on this register
 //UCR0C is the USART Control and Status Register C
 // It has the USBS0 and UCSZ00 flags that set the frame format
 //UDR0 is the USART I/O Data Register

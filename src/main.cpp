@@ -127,6 +127,7 @@ int atoi(const char *str)
     return res;
 }
 
+
 int main(void)
 {
 
@@ -135,13 +136,13 @@ int main(void)
     // Setup the serial port
     serialBegin();
     lcd_init();
-    init_time(F_CPU); // F_CPU defined by avr in util/delay.h
+    init_time(F_CPU); // F_CPU defined by avr in util/delay.h; Using 16MHz on the simluation.
     sei();            // Enable global interrupts
 
     // Setup the lock writing the password to the EEPROM
     // this only need to be done once
     // It could be done dynamically but for the sake of simplicity
-    // we are doing it here
+    // we are doing it here ; Doing dynamically now.
 
     if (false)
     {

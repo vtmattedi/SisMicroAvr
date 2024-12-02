@@ -44,4 +44,4 @@ struct dateResult
   int day = 1;
 };
 
-dateResult getDate();
+dateResult getDate(unsigned long secs);
