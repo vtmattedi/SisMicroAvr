@@ -9,11 +9,21 @@
 #define MAX_USERS 10
 #define TIME_TO_LOCK 5000 //After this time (ms) the lock will lock itself
 #define TIME_TO_STALE 15000 //After this time (ms) the lock will reset the guess count and the current password
+#define MAX_GUESSES 3 //After this number of incorrect guesses the alarm will be raised
+enum LockState
+{
+    IDLE,
+    REGISTERING,
+    MESSAGE,
+    ALARM
+};
+
 struct Lock
 {
     int numUsers;
     int relayPin;
     int alarmPin;
+    int hashtagCount;
     ProtoString password;
     bool locked;
     bool alarmRaised;
@@ -29,6 +39,8 @@ struct Lock
     unsigned long lastOpen; // millis() of the last time the lock was open
     int currentUser;
     bool stateChaged;
+    LockState state;
+    ProtoString message;
 };
 
 extern Lock lockHandler;

@@ -109,5 +109,5 @@ void serialPrintTime()
 {
     DateTime dt;
     dt.Calculate();
-    serialPrintf("[%02d:%02d:%02d] - ", dt.hour, dt.minute, dt.second);
+    serialPrintf("[%02d:%02d %02d/%02d/%04d] - ", dt.hour, dt.minute, dt.day, dt.month, dt.year);
 }

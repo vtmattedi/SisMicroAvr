@@ -35,3 +35,13 @@ struct DateTime
   void Calculate();
 };
 
+
+
+struct dateResult
+{
+  int year = 1970;
+  int month = 1;
+  int day = 1;
+};
+
+dateResult getDate();
