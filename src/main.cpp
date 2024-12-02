@@ -127,7 +127,6 @@ int atoi(const char *str)
     return res;
 }
 
-
 int main(void)
 {
 
