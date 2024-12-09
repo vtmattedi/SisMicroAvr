@@ -38,8 +38,8 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [
-    "C:/Users/Vity1/Documents/SisMicroAvr/include",
-    "C:/Users/Vity1/Documents/SisMicroAvr/src",
+    "C:/Users/Vity1/Documents/PlatformIO/Projects/SisMicro/include",
+    "C:/Users/Vity1/Documents/PlatformIO/Projects/SisMicro/src",
     ""
   ],
   "C_Cpp_Runner.includeSearch": [
