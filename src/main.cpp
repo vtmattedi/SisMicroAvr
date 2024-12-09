@@ -142,28 +142,7 @@ int main(void)
     // this only need to be done once
     // It could be done dynamically but for the sake of simplicity
     // we are doing it here ; Doing dynamically now.
-
-    if (false)
-    {
-        static char *const passwd[] = {"1234", "4321", "4567", "9876", "0000"};
-        for (int j = 0; j < 5; j++)
-        {
-            const char *data = passwd[j];
-            for (int i = 0; i < 4; i++)
-            {
-                int addr = j * ADDR_MULTIPLIER + i;
-                int res = EEPROM_write(addr, data[i]);
-                if (res != EEPROM_OK)
-                {
-                    serialPrintf("Error writing to EEPROM: %d j: %d, i:%d\n", res, j, i);
-                }
-                // if (res == EEPROM_OK)
-                // {
-                //     serialPrintf("Wrote %c to EEPROM at %d\n", data[i], addr);
-                // }
-            }
-        }
-    }
+    
     lockHandler.init(RELAYPIN, ALARMPIN);
     static int lastKey = KEYPAD_NONE;
     serialPrint("Please send current timestamp\n");
