@@ -1,7 +1,7 @@
-<circuit version="1.1.0-SR0" rev="1917" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+<circuit version="1.1.0-SR0" rev="1917" stepSize="1000000" stepsPS="10000" NLsteps="100000" reaStep="1000000" animate="0" >
 
 <item itemtype="Subcircuit" CircId="Uno-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-196,-180" rotation="0" hflip="1" vflip="1" label="Uno-3" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false">
-<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="../../../Documents/PlatformIO/Projects/SisMicro/.pio/build/uno/firmware.hex" Auto_Load="false" saveEepr="true" eeprom="49,50,51,52,255,52,51,50,49,255,52,53,54,55,255,57,56,55,54,255,48,48,48,48," SerialMon="-1" />
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="firmware.hex" Auto_Load="false" saveEepr="true" eeprom="49,50,51,52,255,52,51,50,49,255,52,53,54,55,255,57,56,55,54,255,48,48,48,48,0," SerialMon="-1" />
 </item>
 
 <item itemtype="KeyPad" CircId="KeyPad-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-304,-80" rotation="0" hflip="1" vflip="1" label="KeyPad-4" idLabPos="-8,-16" labelrot="0" valLabPos="-16,20" valLabRot="0" Rows="4" Cols="3" Key_Labels="123456789&#x3C0#" />
@@ -33,6 +33,16 @@
 <item itemtype="Probe" CircId="Probe-28" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,-112" rotation="-45" hflip="1" vflip="1" label="Probe-28" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 
 <item itemtype="Probe" CircId="Probe-29" mainComp="false" Show_id="false" Show_Val="true" Pos="-304,-124" rotation="-45" hflip="1" vflip="1" label="Probe-29" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-30" mainComp="false" Show_id="false" Show_Val="true" Pos="-216,-192" rotation="-45" hflip="1" vflip="1" label="Probe-30" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-31" mainComp="false" Show_id="false" Show_Val="true" Pos="-224,-180" rotation="-45" hflip="1" vflip="1" label="Probe-31" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-32" mainComp="false" Show_id="false" Show_Val="true" Pos="-232,-168" rotation="-45" hflip="1" vflip="1" label="Probe-32" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-33" mainComp="false" Show_id="false" Show_Val="true" Pos="-240,-148" rotation="-45" hflip="1" vflip="1" label="Probe-33" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-34" mainComp="false" Show_id="false" Show_Val="true" Pos="-296,-164" rotation="-45" hflip="1" vflip="1" label="Probe-34" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 
 <item itemtype="Node" CircId="Node-18" mainComp="false" Pos="-344,-48" />
 
