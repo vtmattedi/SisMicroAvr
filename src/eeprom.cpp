@@ -33,6 +33,8 @@ uint8_t EEPROM_write(uint16_t uiAddress, uint8_t ucData)
 	/* Write logical one to EEMPE */
 	EECR |= (1<<EEMPE);
 	/* Start eeprom write by setting EEPE */
+	// EEPE = EEPROM Write Enable
+	// EEMPE = EEPROM Master Write Enable
 	EECR |= (1<<EEPE);
 	return EEPROM_OK;
 }
