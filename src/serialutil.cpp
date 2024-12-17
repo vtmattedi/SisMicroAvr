@@ -39,7 +39,7 @@ void serialPrintf(const char *str, ...)
     va_list args;
     va_start(args, str);
     char buffer[256];
-    vsprintf(buffer, str, args);
+    vsnprintf(buffer,256, str, args);
     serialPrint(buffer);
     va_end(args);
 }

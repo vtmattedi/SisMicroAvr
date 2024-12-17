@@ -12,6 +12,7 @@ uint8_t EEPROM_read(uint16_t uiAddress, uint8_t *data)
 	EEARH = (uiAddress & 0xFF00) >> 8;
 	EEARL = (uiAddress & 0x00FF);
 	/* Start eeprom read by writing EERE */
+	// EERE = EEPROM Read Enable
 	EECR |= (1<<EERE);
 	/* Return data from Data Register */
 	*data = EEDR;

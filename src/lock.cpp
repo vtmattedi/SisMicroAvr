@@ -113,7 +113,7 @@ void Lock::HandleInput(int key)
         }
         else if (this->state == REGISTERING)
         {
-            if (now - this->lastInput > TIME_TO_STALE)
+            if (now - this->lastInput > TIME_TO_STALE && this->numUsers > 0)
             {
                 this->state = IDLE;
                 this->reset();
