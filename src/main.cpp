@@ -9,12 +9,93 @@
 #include <pinutil.h>     // Pin functions
 #include <keyPad.h>      // Keypad functions
 #include <protostring.h> // String Helper functions
-#include <adc.h>         // ADC functions
-#include <WaterHandler.h>// Handle Water Level  functions
+#include <lock.h>        // Lock functions
+#include <lcd.h>         // LCD functions
 #include <timing.h>      // Timing functions
 
+#define RELAYPIN 8
+#define ALARMPIN 9
 
+ProtoString passwd = ProtoString();
 
+void DateTimeToString(DateTime *dt, char *buffer)
+{
+    sprintf(buffer, "[%02d:%02d:%02d] - ", dt->hour, dt->minute, dt->second);
+}
+
+// Clear and print; used to update the display
+void cnp()
+{
+    clear_lcd();
+    lcd_set_cursor(0, 0);
+
+    if (lockHandler.state == REGISTERING)
+    {
+        char buffer[50];
+        sprintf(buffer, "Register User %d:", lockHandler.numUsers);
+        lcd_print(buffer);
+        lcd_set_cursor(1, 0);
+        lcd_print("      ");
+        for (int i = 0; i < lockHandler.password.length; i++)
+        {
+            lcd_print("*");
+        }
+        lcd_set_cursor(2, 0);
+        lcd_print(lockHandler.numUsers == MAX_USERS ? "Max users reached" : "Enter 4 digits");
+        lcd_set_cursor(3, 0);
+        lcd_print("C Clear | # Save");
+
+        return;
+    }
+    else if (lockHandler.state == MESSAGE)
+    {
+        ProtoString msg[4];
+        // Split the message into 4 lines
+        if (lockHandler.message.length > 16)
+        {
+            for (int i = 0 ; i < 4; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    protoStringAppendChar(&msg[i], lockHandler.message.data[j + i * 16]);
+                }
+            }
+        }
+        else
+        {
+            protoStringAssign(&msg[0], lockHandler.message.data);
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            lcd_set_cursor(i, 0);
+            lcd_print(msg[i].data);
+        }
+    }
+    else if (lockHandler.state == IDLE)
+    {
+        lcd_print("Enter password:");
+        lcd_set_cursor(1, 0);
+        // Print the password as asterisks, centralizing it
+        lcd_print("      ");
+        for (int i = 0; i < lockHandler.password.length; i++)
+        {
+            lcd_print("*");
+        }
+
+        if (lockHandler.alarmRaised)
+        {
+            lcd_set_cursor(2, 0);
+            lcd_print("Alarm! pew pew!");
+        }
+        else if (lockHandler.message.length > 0)
+        {
+            lcd_set_cursor(2, 0);
+            lcd_print(lockHandler.message.data);
+        }
+        lcd_set_cursor(3, 0);
+        lcd_print(lockHandler.locked ? "     Locked" : "      Open");
+    }
+}
 // Convert a string to an unsigned long using base 10
 unsigned long strtoul(const char *str)
 {
@@ -53,7 +134,7 @@ int main(void)
     setupKeyPad();
     // Setup the serial port
     serialBegin();
-
+    lcd_init();
     init_time(F_CPU); // F_CPU defined by avr in util/delay.h; Using 16MHz on the simluation.
     sei();            // Enable global interrupts
 
@@ -61,30 +142,58 @@ int main(void)
     // this only need to be done once
     // It could be done dynamically but for the sake of simplicity
     // we are doing it here ; Doing dynamically now.
- 
+    
+    lockHandler.init(RELAYPIN, ALARMPIN);
     static int lastKey = KEYPAD_NONE;
     serialPrint("Please send current timestamp\n");
     while (true)
     {
+        int key = readKeypad();
+        if (key != lastKey)
+        {
+            lastKey = key;
+            if (key != KEYPAD_NONE)
+            {
+                lockHandler.HandleInput(key);
+                // cnp();
+                // Prints current guess for debugging
+                //  char dateBuffer[50];
+                //  DateTimeToString(&dt, dateBuffer);
+                //  serialPrint(dateBuffer);
+                //  serialPrint("Passwd: \"");
+                //  serialPrint(lockHandler.password.data);
+                //  serialPrint("\"\n");
+                //  char buffer[50];
+                //  sprintf(buffer, "Key: %c\n", keyMap[key]);
+                //  serialPrint(buffer);
+            }
+        }
+        else
+            lockHandler.HandleInput(KEYPAD_NONE); // call this to update the display
+
+        if (lockHandler.stateChaged)
+        {
+            cnp();
+            lockHandler.stateChaged = false;
+        }
+
         // read serial data
         if (data_available())
         {
             ProtoString str;
+            initProtoString(&str);
             while (data_available())
             {
                 char c = serial_read();
                 if (c != 13)
                 {
-                   str += c;
+                    protoStringAppendChar(&str, c);
                 }
                 // char buffer[50];
                 // sprintf(buffer, "Received: %d\n", c);
                 // serialPrint(buffer);
             }
-            if (str[0] == 't')
-            {
-                str = str.substring(2);
-                 char buffer[100];
+            char buffer[100];
             sprintf(buffer, "Received: %s\n", str.data);
             serialPrint(buffer);
             unsigned long timestamp = strtoul(str.data);
@@ -96,8 +205,6 @@ int main(void)
             serialPrint(buffer);
             sprintf(buffer, "Date set to: %02d/%02d/%02d\n", dt.day, dt.month, dt.year);
             serialPrint(buffer);
-            }
-           
         }
     }
 
